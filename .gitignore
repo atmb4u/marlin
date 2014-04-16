@@ -1,0 +1,5 @@
+*.pyc
+.idea/*
+build/*
+dist/*
+Marlin.egg-info/*
