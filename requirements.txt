@@ -1,6 +1,5 @@
 redis
 flask
 ujson
-flask-testing
 requests
 python-daemon
