@@ -76,8 +76,6 @@ for marlin_dir in ['marlin']:
         elif filenames:
             data_files.append([dirpath, [os.path.join(dirpath, f) for f in filenames]])
 
-data_files.extend([('marlin/templates', glob('marlin/marlin/templates/*')),
-                   ('marlin/static', glob('marlin/marlin/static/*'))])
 
 # Small hack for working with bdist_wininst.
 # See http://mail.python.org/pipermail/distutils-sig/2004-August/004134.html
@@ -90,13 +88,12 @@ scripts = ['marlin/marlin-server']
 version = marlin.marlin.VERSION
 
 setup_args = {
-    'name': 'Marlin',
+    'name': 'marlin',
     'version': version,
     'url': 'http://atmb4u.github.io/marlin',
     'description': 'A fast and easy ReST API on top of redis',
-    'long_description': open('marlin/README.md').read(),
     'author': 'Anoop Thomas Mathew',
-    'maintainer_email': 'atmb4u@gmail.com',
+    'author_email': 'atmb4u@gmail.com',
     'license': 'BSD',
     'packages': packages,
     'cmdclass': cmdclasses,
@@ -123,7 +120,8 @@ else:
     setup_args['install_requires'] = [
         "redis>=2.9.1",
         "requests>=2.2.1",
-        "ujson>=1.33"
+        "ujson>=1.33",
+        'python-daemon==1.6'
     ]
 
 setup(**setup_args)

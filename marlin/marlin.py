@@ -10,7 +10,7 @@ from redis import Redis, ConnectionError
 
 from flask import make_response, request, current_app, Response, Flask, render_template, url_for
 
-VERSION = "0.93b"
+VERSION = "0.965"
 
 config = ConfigParser.ConfigParser()
 config.read("marlin.config")
@@ -89,6 +89,7 @@ def returns_json(f):
     def decorated_function(*args, **kwargs):
         r = f(*args, **kwargs)
         return Response(r, content_type='application/json; charset=utf-8')
+
     return decorated_function
 
 
@@ -100,15 +101,23 @@ def index():
 
 
 def unified_router(rdm):
+    """
+    used by uni_api_router and multi_api_router.
+    input: a RedisDatabaseManager instance
+    output: http response with/without data with responses accordingly.
+        with data : 200
+        Data not found: 404
+    """
     error_response = Response(json.dumps(
         {'status': "Make sure redis-server is installed and running on http://%s:%s" % (REDIS_SERVER, REDIS_PORT)}),
-                              content_type='application/json; charset=utf-8', status=500)
+        content_type='application/json; charset=utf-8', status=500)
     if rdm:
         rdm.manipulate_data()
     else:
         return error_response
     if rdm.status:
         if rdm.data:
+            #TODO: add list and item views for data in html
             return Response(rdm.string_data, content_type='application/json; charset=utf-8')
         elif rdm.method == "DELETE":
             return Response("", status=200, content_type='application/json; charset=utf-8')
@@ -139,6 +148,9 @@ def multi_api_router(version, model):
 
 @app.route("/ping/")
 def ping():
+    """
+    Service used to check if the connection to redis server is intact and redis server is working well.
+    """
     r = Redis(host=REDIS_SERVER, port=REDIS_PORT, password=REDIS_PASSWORD)
     try:
         r.ping()
@@ -149,29 +161,9 @@ def ping():
 
 class RedisDatabaseManager(object):
     """
-    types:
-        boolean
-        float
-        int
-        string
-        json
+    manages all the http requests and routes in the backend for GET, DELETE or PUT operation
+    accordingly.
 
-    NOT IMPLEMENTED
-        foreignkey
-        list
-        manytomany
-
-    if method == "POST" and not id:
-        get_data()
-    if method == "GET" and id:
-
-    if method == "GET" and not id:
-
-    if method == "DELETE" and id:
-
-    if method == "DELETE" and not id:
-
-    if method == "PUT" and id:
     """
 
     r = Redis(host=REDIS_SERVER, port=REDIS_PORT, password=REDIS_PASSWORD)
