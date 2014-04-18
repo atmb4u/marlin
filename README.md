@@ -1,3 +1,5 @@
+![Marlin](https://github.com/atmb4u/marlin/blob/master/marlin/static/marlin.jpg?raw=true)
+
 Marlin
 ======
 
@@ -9,7 +11,7 @@ Installation
 
 ```bash
 
-pip install marlin  # install marlin to the system either into a virtualenv or the default system.
+pip install marlin  # install marlin to the python environment.
 
 ```
 
