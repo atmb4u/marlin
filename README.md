@@ -49,7 +49,10 @@ Server Configuration
 
 __marlin.config__
 
+For custom configuration, just create a __marlin.config__ on the directory from where you are starting marlin-server.
+
 ```
+
 [SERVER]
 DEBUG = True
 PID_FILE = /tmp/marlin.pid
@@ -65,4 +68,3 @@ API_PREFIX = /api/
 APP_NAME = marlin
 ```
 
-For custom configuration, just create a __marlin.config__ on the directory from where you are starting marlin-server.
