@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Marlin by atmb4u</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/main.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+
+      <header>
+        <h1>Marlin</h1>
+        <p>Fast and easy ReST API server on redis</p>
+      </header>
+
+      <div id="banner">
+        <span id="logo"></span>
+
+        <a href="https://github.com/atmb4u/marlin" class="button fork"><strong>View On GitHub</strong></a>
+        <div class="downloads">
+          <span>Downloads:</span>
+          <ul>
+            <li><a href="https://github.com/atmb4u/marlin/zipball/master" class="button">ZIP</a></li>
+            <li><a href="https://github.com/atmb4u/marlin/tarball/master" class="button">TAR</a></li>
+          </ul>
+        </div>
+      </div><!-- end banner -->
+
+    <div class="wrapper">
+      <nav>
+        <ul></ul>
+      </nav>
+      <section>
+        <p><img src="https://github.com/atmb4u/marlin/blob/master/marlin/static/marlin.jpg?raw=true" alt="Marlin"></p>
+
+<h1>
+<a name="marlin" class="anchor" href="#marlin"><span class="octicon octicon-link"></span></a>Marlin</h1>
+
+<h4>
+<a name="a-fast-frill-free-rest-api-with-zero-setup-time-is-too-interesting" class="anchor" href="#a-fast-frill-free-rest-api-with-zero-setup-time-is-too-interesting"><span class="octicon octicon-link"></span></a>a fast, frill-free REST API with ZERO setup time is too interesting.</h4>
+
+<h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<div class="highlight highlight-bash"><pre>
+pip install marlin  <span class="c"># install marlin to the python environment.</span>
+
+</pre></div>
+
+<h2>
+<a name="managing-server" class="anchor" href="#managing-server"><span class="octicon octicon-link"></span></a>Managing Server</h2>
+
+<div class="highlight highlight-bash"><pre>marlin-server start  // starts server with default conf on port 5000
+
+marlin-server stop  // stops the server
+
+marlin-server restart  // restart the server
+
+marlin-server live  // starts a server on DEBUG mode
+</pre></div>
+
+<h2>
+<a name="request-methods" class="anchor" href="#request-methods"><span class="octicon octicon-link"></span></a>Request Methods</h2>
+
+<table>
+<thead><tr>
+<th>METHOD</th>
+<th align="center">URL</th>
+<th align="center">RESPONSE</th>
+<th align="center">DESCRIPTION</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td align="center">/api/v1//?start=1&amp;end=10</td>
+<td align="center">[data] 1-10</td>
+<td align="center">returns the 1-10 elements in the </td>
+</tr>
+<tr>
+<td>GET</td>
+<td align="center">/api/v1//1</td>
+<td align="center">data item</td>
+<td align="center">returns the element with id 1</td>
+</tr>
+<tr>
+<td>GET</td>
+<td align="center">/ping/</td>
+<td align="center">200/500</td>
+<td align="center">check if service is up and connected</td>
+</tr>
+<tr>
+<td>POST</td>
+<td align="center">/api/v1//</td>
+<td align="center">[data]</td>
+<td align="center">adds data to the model</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td align="center">/api/v1//1/</td>
+<td align="center">[data]</td>
+<td align="center">edit data</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td align="center">/api/v1//1</td>
+<td align="center">200</td>
+<td align="center">delete the data item</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td align="center">/api/v1//</td>
+<td align="center">-</td>
+<td align="center">delete complete data in model</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td align="center">/api/v1//&amp;force=1</td>
+<td align="center">-</td>
+<td align="center">delete and reset model (starts with id=1</td>
+</tr>
+</tbody>
+</table><h2>
+<a name="server-configuration" class="anchor" href="#server-configuration"><span class="octicon octicon-link"></span></a>Server Configuration</h2>
+
+<p><strong>marlin.config</strong></p>
+
+<p>For custom configuration, just create a <strong>marlin.config</strong> on the directory from where you are starting marlin-server.</p>
+
+<pre><code>
+[SERVER]
+DEBUG = True
+PID_FILE = /tmp/marlin.pid
+LOG_FILE = /tmp/marlin.log
+SERVER_PORT = 5000
+
+[REDIS]
+REDIS_SERVER = localhost
+REDIS_PORT = 6379
+API_PREFIX = /api/
+
+[APP]
+APP_NAME = marlin
+</code></pre>
+      </section>
+      <footer>
+        <p>Project maintained by <a href="https://github.com/atmb4u">atmb4u</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-50163949-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
