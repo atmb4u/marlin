@@ -19,13 +19,13 @@ Managing Server
 ---------------
 
 ```bash
-marlin-server start  // starts the REST API with default settings on port 5000
+marlin-server start  // starts server with default conf on port 5000
 
 marlin-server stop  // stops the server
 
 marlin-server restart  // restart the server
 
-marlin-server live  // starts a server on DEBUG mode, __NOT__ as a daemon
+marlin-server live  // starts a server on DEBUG mode
 ```
 
 Request Methods
