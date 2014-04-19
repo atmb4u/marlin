@@ -5,27 +5,58 @@ Marlin
 
 #### a fast, frill-free REST API with ZERO setup time is too interesting.
 
-
-Installation
-------------
+Quick Start Guide
+-----------------
 
 ```bash
 
 pip install marlin  # install marlin to the python environment.
 
+marlin-server start  # start marlin server - port: 5000
+
 ```
+
+
+Detailed Installation in Ubuntu
+-------------------------------
+
+* redis-server
+
+```bash
+sudo apt-get install redis-server
+```
+* create virtualenv
+
+```bash
+sudo apt-get install virtualenv
+virtualenv marlin-env
+source marlin-env/bin/activate
+```
+
+* requests, ujson, flask, python-daemon
+```bash
+pip install flask requests ujson python-daemon
+```
+
+* install marlin
+
+```bash
+pip install marlin  # install marlin to the python environment.
+
+```
+
 
 Managing Server
 ---------------
 
 ```bash
-marlin-server start  // starts server with default conf on port 5000
+marlin-server start  # starts server with default conf on port 5000
 
-marlin-server stop  // stops the server
+marlin-server stop  # stops the server
 
-marlin-server restart  // restart the server
+marlin-server restart  # restart the server
 
-marlin-server live  // starts a server on DEBUG mode
+marlin-server live  # starts a server on DEBUG mode
 ```
 
 Request Methods
