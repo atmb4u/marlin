@@ -48,23 +48,51 @@
 <a name="a-fast-frill-free-rest-api-with-zero-setup-time-is-too-interesting" class="anchor" href="#a-fast-frill-free-rest-api-with-zero-setup-time-is-too-interesting"><span class="octicon octicon-link"></span></a>a fast, frill-free REST API with ZERO setup time is too interesting.</h4>
 
 <h2>
-<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+<a name="quick-start-guide" class="anchor" href="#quick-start-guide"><span class="octicon octicon-link"></span></a>Quick Start Guide</h2>
 
 <div class="highlight highlight-bash"><pre>
 pip install marlin  <span class="c"># install marlin to the python environment.</span>
+
+marlin-server start  <span class="c"># start marlin server - port: 5000</span>
+
+</pre></div>
+
+<h2>
+<a name="detailed-installation-in-ubuntu" class="anchor" href="#detailed-installation-in-ubuntu"><span class="octicon octicon-link"></span></a>Detailed Installation in Ubuntu</h2>
+
+<ul>
+<li>redis-server</li>
+</ul><div class="highlight highlight-bash"><pre>sudo apt-get install redis-server
+</pre></div>
+
+<ul>
+<li>create virtualenv</li>
+</ul><div class="highlight highlight-bash"><pre>sudo apt-get install virtualenv
+virtualenv marlin-env
+<span class="nb">source </span>marlin-env/bin/activate
+</pre></div>
+
+<ul>
+<li>requests, ujson, flask, python-daemon</li>
+</ul><div class="highlight highlight-bash"><pre>pip install flask requests ujson python-daemon
+</pre></div>
+
+<ul>
+<li>install marlin</li>
+</ul><div class="highlight highlight-bash"><pre>pip install marlin  <span class="c"># install marlin to the python environment.</span>
 
 </pre></div>
 
 <h2>
 <a name="managing-server" class="anchor" href="#managing-server"><span class="octicon octicon-link"></span></a>Managing Server</h2>
 
-<div class="highlight highlight-bash"><pre>marlin-server start  // starts server with default conf on port 5000
+<div class="highlight highlight-bash"><pre>marlin-server start  <span class="c"># starts server with default conf on port 5000</span>
 
-marlin-server stop  // stops the server
+marlin-server stop  <span class="c"># stops the server</span>
 
-marlin-server restart  // restart the server
+marlin-server restart  <span class="c"># restart the server</span>
 
-marlin-server live  // starts a server on DEBUG mode
+marlin-server live  <span class="c"># starts a server on DEBUG mode</span>
 </pre></div>
 
 <h2>
