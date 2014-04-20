@@ -10,6 +10,16 @@ if len(sys.argv) == 2 and 'live' == sys.argv[1]:
 else:
     from marlin.marlin import app
 
+try:
+    from marlin_functions import *
+    import inspect
+    import marlin_functions
+    funcs = [func[0] for func in inspect.getmembers(marlin_functions, inspect.isfunction)]
+    if funcs:
+        print("Custom Functions defined:", funcs)
+except:
+    print("No custom functions defined.\n Check atmb4u.github.io/marlin for more details on custom functions.")
+
 
 config = ConfigParser.ConfigParser()
 config.read("marlin.config")
@@ -42,6 +52,7 @@ class MarlinServer():
 
     @staticmethod
     def run():
+
         app.run(port=SERVER_PORT)
 
 

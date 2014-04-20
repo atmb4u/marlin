@@ -10,7 +10,7 @@ from redis import Redis, ConnectionError
 
 from flask import make_response, request, current_app, Response, Flask, render_template, url_for
 
-VERSION = "0.979"
+VERSION = "0.981"
 
 config = ConfigParser.ConfigParser()
 config.read("marlin.config")
@@ -169,7 +169,7 @@ class RedisDatabaseManager(object):
     r = Redis(host=REDIS_SERVER, port=REDIS_PORT, password=REDIS_PASSWORD)
     app_name = APP_NAME
 
-    def __init__(self, request, version, model, id):
+    def __init__(self, request, version="v1", model="default", id=None):
         self.request = request
         self.version = version
         self.model = model

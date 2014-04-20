@@ -99,3 +99,81 @@ API_PREFIX = /api/
 APP_NAME = marlin
 ```
 
+Custom Urls and Functions
+----------------
+
+Always, a basic REST API is just a scaffolding for the application, and custom defined urls and functions make it beautiful. As marlin is more focused on performance, it is designed for flexibility as well.
+
+It is pretty simple to create custom functions in Marlin.
+
+Just place ```marlin_function.py``` in the present working directory (pwd), with custom routes and custom responses.
+
+
+```python
+# marlin_functions.py
+from marlin import app
+
+
+@app.route("/example/"):
+    return Response("Simple Custom Response")
+```
+
+or a more complex example.
+
+### To get a custom element based on a user id
+
+```python
+import json
+from marlin import app, RedisDatabaseManager
+from flask import Response, request
+
+
+@app.route("/simple_get/<model>")
+def custom_get(model):
+    rdm = RedisDatabaseManager(request, model, version='v1')
+    user_id = 127
+    if rdm:
+        rdm.manipulate_data()
+        rdm.get_from_redis(user_id)  # get data for the specific user id
+    else:
+        return json.dumps({"status": "Something is not right"})
+    if rdm.status and rdm.data:
+        return Response(rdm.string_data, content_type='application/json; charset=utf-8')
+    elif rdm.status:
+        return Response(json.dumps({'status': "No data Found"}), content_type='application/json; charset=utf-8',
+                        status=404)
+    else:
+        return json.dumps({"status": "Something is not right"})
+```
+
+
+A little more complicated Example
+### Following example filter all the objects with ```name=Apple```
+
+```python
+@app.route('/<model>/', methods=['GET'])
+def little_complicated(model):
+    custom_range_start = 10
+    custom_range_end = 70
+    error_response = Response(json.dumps(
+        {'status': "Some unknown error"}),
+        content_type='application/json; charset=utf-8', status=500)
+    rdm = RedisDatabaseManager(request, model=model)
+    if rdm:
+        rdm.manipulate_data()
+        rdm.get_many_from_redis(custom_range_start, custom_range_end)
+    else:
+        return error_response
+    if rdm.status:
+        if rdm.data:
+            custom_query_set = []
+            for datum in rdm.data:
+                if datum.get("name") == "Apple":
+                    custom_query_set.append(datum)
+            return Response(json.dumps(custom_query_set), content_type='application/json; charset=utf-8')
+        else:
+            return Response(json.dumps({'status': "No data Found"}), content_type='application/json; charset=utf-8',
+                            status=404)
+    else:
+        return error_response
+```
