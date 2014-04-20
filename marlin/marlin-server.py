@@ -20,6 +20,7 @@ try:
 except:
     print("No custom functions defined.\n Check atmb4u.github.io/marlin for more details on custom functions.")
 
+print app.template_folder
 
 config = ConfigParser.ConfigParser()
 config.read("marlin.config")

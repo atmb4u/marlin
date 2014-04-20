@@ -4,13 +4,14 @@
 from functools import wraps, update_wrapper
 from datetime import timedelta
 import ConfigParser
+import os
 
 import ujson as json
 from redis import Redis, ConnectionError
 
 from flask import make_response, request, current_app, Response, Flask, render_template, url_for
 
-VERSION = "0.981"
+VERSION = "0.984"
 
 config = ConfigParser.ConfigParser()
 config.read("marlin.config")
@@ -40,8 +41,10 @@ if config.has_option("REDIS", "REDIS_PASSWORD"):
 else:
     REDIS_PASSWORD = ""
 
+
 app = Flask(__name__)
 app.debug = DEBUG
+app.template_folder = os.path.join(app.root_path, "templates")
 
 
 def cross_domain(origin=None, methods=None, headers=None,
