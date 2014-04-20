@@ -23,6 +23,7 @@
 
       <div id="banner">
         <span id="logo"></span>
+
         <a href="https://github.com/atmb4u/marlin" class="button fork"><strong>View On GitHub</strong></a>
         <div class="downloads">
           <span>Downloads:</span>
@@ -41,7 +42,6 @@
         <p><img src="https://github.com/atmb4u/marlin/blob/master/marlin/static/marlin.jpg?raw=true" alt="Marlin"></p>
 
 <h1>
-<iframe src="http://ghbtns.com/github-btn.html?user=atmb4u&repo=marlin&type=watch" height="30" width="70" frameborder="0" scrolling="0" style="width:70px; height: 30px;" allowTransparency="true"></iframe><br>
 <a name="marlin" class="anchor" href="#marlin"><span class="octicon octicon-link"></span></a>Marlin</h1>
 
 <h4>
@@ -177,6 +177,84 @@ API_PREFIX = /api/
 [APP]
 APP_NAME = marlin
 </code></pre>
+
+<h2>
+<a name="custom-urls-and-functions" class="anchor" href="#custom-urls-and-functions"><span class="octicon octicon-link"></span></a>Custom Urls and Functions</h2>
+
+<p>Always, a basic REST API is just a scaffolding for the application, and custom defined urls and functions make it beautiful. As marlin is more focused on performance, it is designed for flexibility as well.</p>
+
+<p>It is pretty simple to create custom functions in Marlin.</p>
+
+<p>Just place <code>marlin_function.py</code> in the present working directory (pwd), with custom routes and custom responses.</p>
+
+<div class="highlight highlight-python"><pre><span class="c"># marlin_functions.py</span>
+<span class="kn">from</span> <span class="nn">marlin</span> <span class="kn">import</span> <span class="n">app</span>
+
+
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">"/example/"</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="s">"Simple Custom Response"</span><span class="p">)</span>
+</pre></div>
+
+<p>or a more complex example.</p>
+
+<h3>
+<a name="to-get-a-custom-element-based-on-a-user-id" class="anchor" href="#to-get-a-custom-element-based-on-a-user-id"><span class="octicon octicon-link"></span></a>To get a custom element based on a user id</h3>
+
+<div class="highlight highlight-python"><pre><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">marlin</span> <span class="kn">import</span> <span class="n">app</span><span class="p">,</span> <span class="n">RedisDatabaseManager</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Response</span><span class="p">,</span> <span class="n">request</span>
+
+
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">"/simple_get/&lt;model&gt;"</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">custom_get</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
+    <span class="n">rdm</span> <span class="o">=</span> <span class="n">RedisDatabaseManager</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s">'v1'</span><span class="p">)</span>
+    <span class="n">user_id</span> <span class="o">=</span> <span class="mi">127</span>
+    <span class="k">if</span> <span class="n">rdm</span><span class="p">:</span>
+        <span class="n">rdm</span><span class="o">.</span><span class="n">manipulate_data</span><span class="p">()</span>
+        <span class="n">rdm</span><span class="o">.</span><span class="n">get_from_redis</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>  <span class="c"># get data for the specific user id</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s">"status"</span><span class="p">:</span> <span class="s">"Something is not right"</span><span class="p">})</span>
+    <span class="k">if</span> <span class="n">rdm</span><span class="o">.</span><span class="n">status</span> <span class="ow">and</span> <span class="n">rdm</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">rdm</span><span class="o">.</span><span class="n">string_data</span><span class="p">,</span> <span class="n">content_type</span><span class="o">=</span><span class="s">'application/json; charset=utf-8'</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">rdm</span><span class="o">.</span><span class="n">status</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s">'status'</span><span class="p">:</span> <span class="s">"No data Found"</span><span class="p">}),</span> <span class="n">content_type</span><span class="o">=</span><span class="s">'application/json; charset=utf-8'</span><span class="p">,</span>
+                        <span class="n">status</span><span class="o">=</span><span class="mi">404</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s">"status"</span><span class="p">:</span> <span class="s">"Something is not right"</span><span class="p">})</span>
+</pre></div>
+
+<p>A little more complicated Example</p>
+
+<h3>
+<a name="following-example-filter-all-the-objects-with-nameapple" class="anchor" href="#following-example-filter-all-the-objects-with-nameapple"><span class="octicon octicon-link"></span></a>Following example filter all the objects with <code>name=Apple</code>
+</h3>
+
+<div class="highlight highlight-python"><pre><span class="nd">@app.route</span><span class="p">(</span><span class="s">'/&lt;model&gt;/'</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s">'GET'</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">little_complicated</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
+    <span class="n">custom_range_start</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">custom_range_end</span> <span class="o">=</span> <span class="mi">70</span>
+    <span class="n">error_response</span> <span class="o">=</span> <span class="n">Response</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span>
+        <span class="p">{</span><span class="s">'status'</span><span class="p">:</span> <span class="s">"Some unknown error"</span><span class="p">}),</span>
+        <span class="n">content_type</span><span class="o">=</span><span class="s">'application/json; charset=utf-8'</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+    <span class="n">rdm</span> <span class="o">=</span> <span class="n">RedisDatabaseManager</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">rdm</span><span class="p">:</span>
+        <span class="n">rdm</span><span class="o">.</span><span class="n">manipulate_data</span><span class="p">()</span>
+        <span class="n">rdm</span><span class="o">.</span><span class="n">get_many_from_redis</span><span class="p">(</span><span class="n">custom_range_start</span><span class="p">,</span> <span class="n">custom_range_end</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">error_response</span>
+    <span class="k">if</span> <span class="n">rdm</span><span class="o">.</span><span class="n">status</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">rdm</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+            <span class="n">custom_query_set</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">datum</span> <span class="ow">in</span> <span class="n">rdm</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">datum</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">"name"</span><span class="p">)</span> <span class="o">==</span> <span class="s">"Apple"</span><span class="p">:</span>
+                    <span class="n">custom_query_set</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">datum</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">custom_query_set</span><span class="p">),</span> <span class="n">content_type</span><span class="o">=</span><span class="s">'application/json; charset=utf-8'</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s">'status'</span><span class="p">:</span> <span class="s">"No data Found"</span><span class="p">}),</span> <span class="n">content_type</span><span class="o">=</span><span class="s">'application/json; charset=utf-8'</span><span class="p">,</span>
+                            <span class="n">status</span><span class="o">=</span><span class="mi">404</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">error_response</span>
+</pre></div>
       </section>
       <footer>
         <p>Project maintained by <a href="https://github.com/atmb4u">atmb4u</a></p>
