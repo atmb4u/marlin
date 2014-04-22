@@ -36,7 +36,7 @@ source marlin-env/bin/activate
 
 * requests, ujson, flask, python-daemon
 ```bash
-pip install flask requests ujson python-daemon
+pip install flask requests ujson python-daemon redis
 ```
 
 * install marlin
