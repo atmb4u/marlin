@@ -11,7 +11,7 @@ from redis import Redis, ConnectionError
 
 from flask import make_response, request, current_app, Response, Flask, render_template, url_for
 
-VERSION = "0.985"
+VERSION = "0.986"
 
 config = ConfigParser.ConfigParser()
 config.read("marlin.config")
