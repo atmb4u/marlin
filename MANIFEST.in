@@ -1,0 +1,2 @@
+include marlin/static/*
+include marlin/templates/*

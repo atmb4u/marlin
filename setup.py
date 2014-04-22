@@ -121,7 +121,8 @@ else:
         "redis>=2.9.1",
         "requests>=2.2.1",
         "ujson>=1.33",
-        'python-daemon==1.6'
+        'python-daemon==1.6',
+        'flask'
     ]
 
 setup(**setup_args)
