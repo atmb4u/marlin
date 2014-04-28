@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>Marlin by atmb4u</title>
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <link rel="stylesheet" href="https://rawgithub.com/atmb4u/marlin/master/marlin/static/stylesheets/styles.css">
+    <link rel="stylesheet" href="https://rawgithub.com/atmb4u/marlin/master/marlin/static/stylesheets/pygment_trac.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="javascripts/main.js"></script>
+    <script src="https://rawgithub.com/atmb4u/marlin/master/marlin/static/javascripts/main.js"></script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -19,6 +19,7 @@
       <header>
         <h1>Marlin</h1>
         <p>Fast and easy ReST API server on redis</p>
+          <iframe src="http://ghbtns.com/github-btn.html?user=atmb4u&repo=marlin&type=watch&count=true" height="30" width="90" frameborder="0" scrolling="0" style="width:70px; height: 30px;" allowTransparency="true"></iframe><br>
       </header>
 
       <div id="banner">
@@ -43,7 +44,6 @@
 
 <h1>
 <a name="marlin" class="anchor" href="#marlin"><span class="octicon octicon-link"></span></a>Marlin</h1>
-<iframe src="http://ghbtns.com/github-btn.html?user=atmb4u&repo=marlin&type=watch&count=true" height="30" width="70" frameborder="0" scrolling="0" style="width:70px; height: 30px;" allowTransparency="true"></iframe><br>
 
 <h4>
 <a name="a-fast-frill-free-rest-api-with-zero-setup-time-is-too-interesting" class="anchor" href="#a-fast-frill-free-rest-api-with-zero-setup-time-is-too-interesting"><span class="octicon octicon-link"></span></a>a fast, frill-free REST API with ZERO setup time is too interesting.</h4>
@@ -68,7 +68,8 @@ marlin-server start  <span class="c"># start marlin server - port: 5000</span>
 
 <ul>
 <li>create virtualenv</li>
-</ul><div class="highlight highlight-bash"><pre>sudo apt-get install virtualenv
+</ul><div class="highlight highlight-bash"><pre>sudo apt-get install python-pip
+sudo pip install virtualenv
 virtualenv marlin-env
 <span class="nb">source </span>marlin-env/bin/activate
 </pre></div>
