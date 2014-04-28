@@ -28,8 +28,8 @@ sudo apt-get install redis-server
 * create virtualenv
 
 ```bash
-sudo apt-get install virtualenv
 sudo apt-get install python-pip
+sudo pip install virtualenv
 virtualenv marlin-env
 source marlin-env/bin/activate
 ```
