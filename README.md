@@ -100,7 +100,7 @@ API_PREFIX = /api/
 APP_NAME = marlin
 ```
 
-Custom Urls and Functions
+Custom urls and functions
 ----------------
 
 Always, a basic REST API is just a scaffolding for the application, and custom defined urls and functions make it beautiful. As marlin is more focused on performance, it is designed for flexibility as well.
