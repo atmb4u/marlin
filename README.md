@@ -66,14 +66,14 @@ Request Methods
 
 | METHOD        | URL                               | RESPONSE    |              DESCRIPTION                |
 | ------------- |:--------------------------------: | :----------:| :--------------------------------------:|
-| GET           | /api/v1/<model>/?start=1&end=10   |[data] 1-10  | returns the 1-10 elements in the <model>|
-| GET           | /api/v1/<model>/1                 |  data item  |  returns the element with id 1          |
+| GET           | /api/v1/[model]?start=1&end=10    |[data] 1-10  | returns the 1-10 elements in the [model]|
+| GET           | /api/v1/[model]/1                 |  data item  |  returns the element with id 1          |
 | GET           | /ping/                            |  200/500    |   check if service is up and connected  |
-| POST          | /api/v1/<model>/                  |    [data]   |        adds data to the model           |
-| PUT           | /api/v1/<model>/1/                |    [data]   |             edit data                   |
-| DELETE        | /api/v1/<model>/1                 |    200      |         delete the data item            |
-| DELETE        | /api/v1/<model>/                  |     -       |         delete complete data in model   |
-| DELETE        | /api/v1/<model>/&force=1          |     -       | delete and reset model (starts with id=1|
+| POST          | /api/v1/[model]/                  |    [data]   |        adds data to the model           |
+| PUT           | /api/v1/[model]/1/                |    [data]   |             edit data                   |
+| DELETE        | /api/v1/[model]/1                 |    200      |         delete the data item            |
+| DELETE        | /api/v1/[model]/                  |     -       |         delete complete data in model   |
+| DELETE        | /api/v1/[model]?force=1           |     -       | delete and reset model (starts with id=1|
 
 
 Server Configuration
